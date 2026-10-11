@@ -24,3 +24,7 @@
 | D20 | Actions: DO fail -> aerate, BOD fail -> clean, confidence below High or missing data -> test; shown for top 3, plus "test" for all ghats | Derived from tags/reasons only, no health reasoning | Officer-written actions |
 | D21 | `allowed_numbers` = every number in facts + date parts + 2-digit year suffixes (for "2023-25") | Guard must accept what templates legitimately print | Exact strings only |
 | D22 | Guard strips URLs and site names before extracting numbers; EN banned phrases use word boundaries, HI uses NFC substrings | Avoid "cleaning" false positives; Hindi has no reliable \b | Plain substring |
+| D23 | Ask-the-data: when the model answer fails the guard, errors, times out or there is no key, a keyword router (EN/HI/Hinglish) answers straight from tool results | Never show ungrounded text | Show nothing |
+| D24 | Brief AI path picks the first guard-passing candidate in submission order (not completion order) | Deterministic choice | Fastest wins |
+| D25 | 401/403 -> "AI off, standard text"; other failures -> "AI wording unavailable, showing standard text" | TRD 7.4 and 7.6 | One message |
+| D26 | Scoring vectorised to meet the 2 s budget (16 robustness scenarios) | Per-site loops took 5.5 s | Cache scenarios |

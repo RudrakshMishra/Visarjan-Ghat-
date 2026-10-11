@@ -43,11 +43,13 @@ def classify(pre: str, during: str, after: str) -> str:
 
 def diagnose(df: pd.DataFrame, rules: dict) -> pd.DataFrame:
     """Return site, festival, year, parameter, tag, pre, during, after (one row per table x param)."""
+    cells = {k: g for k, g in df[df["parameter"].isin(list(rules))]
+             .groupby(["site", "festival", "year", "parameter", "phase"], sort=False)}
+    empty = df.iloc[0:0]
     out = []
-    for (site, fest, year), g in df.groupby(["site", "festival", "year"], sort=True):
+    for site, fest, year in sorted(set(map(tuple, df[["site", "festival", "year"]].values.tolist()))):
         for param in rules:
-            p = g[g["parameter"] == param]
-            states = {ph: _phase_state(p[p["phase"] == ph], param, rules)
+            states = {ph: _phase_state(cells.get((site, fest, year, param, ph), empty), param, rules)
                       for ph in ("pre", "during", "after")}
             tag = classify(*(states[ph][0] for ph in ("pre", "during", "after")))
             out.append({"site": site, "festival": fest, "year": int(year), "parameter": param,

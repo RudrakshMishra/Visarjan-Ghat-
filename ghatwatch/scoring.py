@@ -1,21 +1,18 @@
-"""Severity, persistence, event jump, score, rank and confidence per ghat (TRD 5)."""
+"""Severity, persistence, event jump, score, rank and confidence per ghat (TRD 5), vectorised."""
 from __future__ import annotations
 
 import math
 
+import numpy as np
 import pandas as pd
 
 from ghatwatch.loader import BDL, MEASURED, ND, PHASES
-from ghatwatch.rules import severity
 
 DO, BOD = "Dissolved oxygen", "BOD"
 TAG_NO_BASELINE = "No baseline"
 TAG_UNKNOWN = "Unknown, test first"
 OBSERVED = (MEASURED, BDL, ND)
-
-
-def _clamp(x: float) -> float:
-    return min(max(x, 0.0), 1.0)
+COLS = ["site", "score", "rank", "S", "P", "E", "coverage", "confidence", "tags", "worst_do"]
 
 
 def confidence_label(coverage: float, cfg: dict) -> str:
@@ -25,70 +22,86 @@ def confidence_label(coverage: float, cfg: dict) -> str:
     return "Medium" if coverage >= cfg["coverage"]["medium"] else "Low"
 
 
-def coverage_of(g: pd.DataFrame, rules: dict) -> float:
-    """Observed scored cells / expected cells (3 params x 3 phases x tables present)."""
-    tables = g[["festival", "year"]].drop_duplicates()
-    expected = len(rules) * len(PHASES) * len(tables)
-    obs = g[g["parameter"].isin(list(rules)) & g["status"].isin(OBSERVED)]
-    cells = obs[["festival", "year", "phase", "parameter"]].drop_duplicates()
-    return len(cells) / expected if expected else 0.0
+def severities(m: pd.DataFrame, rules: dict) -> pd.Series:
+    """Vectorised severity (same formula as rules.severity) for MEASURED scored rows."""
+    sev = pd.Series(0.0, index=m.index)
+    for param, r in rules.items():
+        sel = m["parameter"] == param
+        v = m.loc[sel, "value"].to_numpy(dtype=float)
+        below = (r.min - v) if r.min is not None else np.zeros_like(v)
+        above = (v - r.max) if r.max is not None else np.zeros_like(v)
+        sev[sel] = np.minimum(np.maximum(np.maximum(below, above), 0.0) / r.cap, 1.0)
+    return sev
+
+
+def _event_terms(m: pd.DataFrame) -> pd.Series:
+    """Per-site mean event term over (festival, year, DO/BOD) with pre and during both MEASURED."""
+    sub = m[m["parameter"].isin([DO, BOD]) & m["phase"].isin(["pre", "during"])]
+    if sub.empty:
+        return pd.Series(dtype=float)
+    piv = sub.pivot_table(index=["site", "festival", "year", "parameter"], columns="phase",
+                          values="value", aggfunc="mean")
+    if not {"pre", "during"} <= set(piv.columns):
+        return pd.Series(dtype=float)
+    piv = piv.dropna(subset=["pre", "during"])
+    if piv.empty:
+        return pd.Series(dtype=float)
+    pre, dur = piv["pre"].to_numpy(), piv["during"].to_numpy()
+    do_t = np.where(pre > 0, (pre - dur) / np.where(pre > 0, pre, 1.0), 0.0)  # DO cannot fall below 0
+    bod_t = (dur - pre) / np.maximum(pre, 1.0)
+    is_do = piv.index.get_level_values("parameter") == DO
+    t = np.clip(np.where(is_do, do_t, bod_t), 0.0, 1.0)
+    return pd.Series(t, index=piv.index.get_level_values("site")).groupby(level=0).mean()
 
 
 def event_jump(m: pd.DataFrame) -> float | None:
-    """Mean DO drop / BOD rise over (festival, year, parameter) with pre and during MEASURED."""
-    terms = []
-    for (_, _, param), grp in m[m["parameter"].isin([DO, BOD])].groupby(["festival", "year", "parameter"]):
-        by = grp.groupby("phase")["value"].mean()
-        if "pre" not in by or "during" not in by:
-            continue
-        pre, dur = by["pre"], by["during"]
-        if param == DO:
-            terms.append(_clamp((pre - dur) / pre) if pre > 0 else 0.0)
-        else:
-            terms.append(_clamp((dur - pre) / max(pre, 1.0)))
-    return sum(terms) / len(terms) if terms else None
-
-
-def _score_site(g: pd.DataFrame, rules: dict, cfg: dict) -> dict:
-    rec = cfg["recency"]
-    m = g[(g["status"] == MEASURED) & g["parameter"].isin(list(rules))].copy()
-    cov = coverage_of(g, rules)
-    conf = confidence_label(cov, cfg)
-    tags: list[str] = []
-    do_vals = m.loc[m["parameter"] == DO, "value"]
-    row = {"site": g["site"].iloc[0], "coverage": cov, "confidence": conf,
-           "worst_do": float(do_vals.min()) if len(do_vals) else math.nan}
-    if m.empty:
-        row.update(score=None, S=None, P=None, E=None, tags=[TAG_UNKNOWN])
-        return row
-    missing_years = set(m["year"].astype(int)) - set(rec)
-    if missing_years:
-        raise ValueError(f"No recency weight in config for years {sorted(missing_years)}")
-    m["w"] = m["year"].map(lambda y: rec[int(y)])
-    m["sev"] = [severity(p, v, rules) for p, v in zip(m["parameter"], m["value"])]
-    S = float((m["w"] * m["sev"]).groupby(m["parameter"]).max().mean())
-    P = float((m["w"] * (m["sev"] > 0)).sum() / m["w"].sum()) if m["w"].sum() > 0 else 0.0
-    E = event_jump(m)
-    w = cfg["weights"]
-    if E is None:
-        tot = w["S"] + w["P"]
-        score = 100 * (w["S"] * S + w["P"] * P) / tot if tot else 0.0
-        tags.append(TAG_NO_BASELINE)
-    else:
-        score = 100 * (w["S"] * S + w["P"] * P + w["E"] * E)
-    if conf == "Low":
-        tags.append(TAG_UNKNOWN)
-    row.update(score=float(score), S=S, P=P, E=E, tags=tags)
-    return row
+    """Event jump E for one ghat's MEASURED rows; None if no pre/during pair."""
+    e = _event_terms(m.assign(site="_"))
+    return float(e.iloc[0]) if len(e) else None
 
 
 def score_ghats(df: pd.DataFrame, rules: dict, cfg: dict) -> pd.DataFrame:
     """Return site, score, rank, S, P, E, coverage, confidence, tags, worst_do (rank 1 = worst)."""
-    rows = [_score_site(g, rules, cfg) for _, g in df.groupby("site", sort=True)]
-    out = pd.DataFrame(rows, columns=["site", "score", "S", "P", "E", "coverage", "confidence",
-                                      "tags", "worst_do"])
+    rec, w = cfg["recency"], cfg["weights"]
+    m = df[(df["status"] == MEASURED) & df["parameter"].isin(list(rules))]
+    missing_years = set(m["year"].astype(int)) - set(rec)
+    if missing_years:
+        raise ValueError(f"No recency weight in config for years {sorted(missing_years)}")
+    wy = m["year"].map(lambda y: rec[int(y)]).astype(float)
+    sev = severities(m, rules)
+    S = (wy * sev).groupby([m["site"], m["parameter"]]).max().groupby(level=0).mean()
+    wsum = wy.groupby(m["site"]).sum()
+    P = ((wy * (sev > 0)).groupby(m["site"]).sum() / wsum.where(wsum > 0)).fillna(0.0)
+    E = _event_terms(m)
+    tables = df[["site", "festival", "year"]].drop_duplicates().groupby("site").size()
+    obs = df[df["parameter"].isin(list(rules)) & df["status"].isin(OBSERVED)]
+    cells = obs[["site", "festival", "year", "phase", "parameter"]].drop_duplicates().groupby("site").size()
+    worst = m[m["parameter"] == DO].groupby("site")["value"].min()
+    rows = []
+    for site in sorted(df["site"].unique()):
+        cov = float(cells.get(site, 0)) / (len(rules) * len(PHASES) * int(tables[site]))
+        conf = confidence_label(cov, cfg)
+        row = {"site": site, "coverage": cov, "confidence": conf, "worst_do": float(worst.get(site, math.nan))}
+        if site not in S.index:
+            row.update(score=None, S=None, P=None, E=None, tags=[TAG_UNKNOWN])
+            rows.append(row)
+            continue
+        s_, p_ = float(S[site]), float(P[site])
+        e_ = float(E[site]) if site in E.index else None
+        tags = []
+        if e_ is None:
+            tot = w["S"] + w["P"]
+            score = 100 * (w["S"] * s_ + w["P"] * p_) / tot if tot else 0.0
+            tags.append(TAG_NO_BASELINE)
+        else:
+            score = 100 * (w["S"] * s_ + w["P"] * p_ + w["E"] * e_)
+        if conf == "Low":
+            tags.append(TAG_UNKNOWN)
+        row.update(score=float(score), S=s_, P=p_, E=e_, tags=tags)
+        rows.append(row)
+    out = pd.DataFrame(rows, columns=[c for c in COLS if c != "rank"])
     key = out.assign(_s=out["score"].apply(lambda s: math.inf if pd.isna(s) else -s),
                      _d=out["worst_do"].fillna(math.inf))
     out = out.loc[key.sort_values(["_s", "_d", "site"]).index].reset_index(drop=True)
     out["rank"] = range(1, len(out) + 1)
-    return out[["site", "score", "rank", "S", "P", "E", "coverage", "confidence", "tags", "worst_do"]]
+    return out[COLS]

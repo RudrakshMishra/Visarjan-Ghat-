@@ -38,6 +38,10 @@ robustness:
   recency: [true, false]
   classes: [B, C]
 
+hindcast:
+  train_years: [2023, 2024]
+  test_year: 2025
+
 metals:
   jump_factor: 3
   placeholder_min_cells: 5
@@ -65,6 +69,7 @@ llm:
   temperature: 0.3
   timeout_s: 20
   max_retries: 2
+  backoff_s: 1.0
   max_tool_rounds: 4
   ask_timeout_s: 25
   cache: true
