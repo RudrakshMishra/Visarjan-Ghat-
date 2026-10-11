@@ -28,3 +28,7 @@
 | D24 | Brief AI path picks the first guard-passing candidate in submission order (not completion order) | Deterministic choice | Fastest wins |
 | D25 | 401/403 -> "AI off, standard text"; other failures -> "AI wording unavailable, showing standard text" | TRD 7.4 and 7.6 | One message |
 | D26 | Scoring vectorised to meet the 2 s budget (16 robustness scenarios) | Per-site loops took 5.5 s | Cache scenarios |
+| D27 | No organiser data pack: data rebuilt from the public MPPCB PDFs with a dev-time script (`scripts/extract_mppcb.py`, PyMuPDF in a separate venv) | Only grounded source available; reproduces T1/T2 and the 1,524-row count exactly | Wait for the pack |
+| D28 | CPCB criteria CSV transcribed from the CPCB Designated Best Use table (A-E) | Needed for rules; values verified against config expectations by `load_rules` | None |
+| D29 | `fmt_num` keeps up to 4 decimals | Values like 0.018 / 0.0183 must not be rounded in the brief | 2 decimals (changed printed values) |
+| D30 | Brief "what this does not tell you" lists only general caveats; absent tables and placeholders stay under Data gaps | Avoid duplicates; one page | Repeat both |

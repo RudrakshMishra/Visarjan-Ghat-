@@ -15,7 +15,7 @@ def facts(syn, rules, cfg):
 
 
 def test_fmt_num():
-    assert [fmt_num(x) for x in (5, 5.0, 0.0, 3.25, 61.234, 2025)] == ["5", "5.0", "0.0", "3.25", "61.23", "2025"]
+    assert [fmt_num(x) for x in (5, 5.0, 0.0, 3.25, 0.018, 0.0183, 2025)] == ["5", "5.0", "0.0", "3.25", "0.018", "0.0183", "2025"]
 
 
 def test_facts_schema(facts):

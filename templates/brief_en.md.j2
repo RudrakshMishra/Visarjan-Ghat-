@@ -51,6 +51,6 @@
 {# EN-19 #}- It says nothing about effects on people, animals or fish.
 {# EN-20 #}- It does not explain why a reading changed; "event window" only means the reading was taken around immersion.
 {# EN-21 #}- It uses past reports ({{ f.years|first }} to {{ f.years|last }}) only; new readings for {{ f.target_date }} are needed.
-{% for t in f.limits_panel %}
-- {{ t }}
-{% endfor %}
+{% for i in f.limits_items %}{% if i.key in ("units_assumed", "four_metals_only", "kamla_ambiguity") %}
+- {{ f.limits_panel[loop.index0] }}
+{% endif %}{% endfor %}

@@ -1,19 +1,30 @@
 # Backend status
 
-**Important:** the three `data/*.csv` files were not available when this was built. All logic is tested on a **synthetic** fixture (`tests/conftest.py`), and the real-data tests skip automatically until the files are added. No number below comes from real data.
+Data rebuilt from the public MPPCB PDFs (see `docs/DATA_SOURCES.md`). 92 tests pass, none skipped. Real pipeline (load + ranking + robustness + hindcast + facts) runs in about 1.1 s.
+
+**Real ranking (Class B, 2023-25, both festivals):**
+1. Bairagarh 52.9
+2. Malikhedi 40.9
+3. Shahpura 40.9
+4. Hathaikheda 39.8
+5. Rani Kamlapati 36.4
+6. Khatlapura 27.0
+7. Prempura 21.6
+
+All have High confidence. Robustness: Bairagarh ranks 1 in 16 of 16 scenarios. Hindcast: top-3 overlap 2 of 3, Spearman 0.61 (n = 7, small sample).
 
 ## Tests (T1 to T21)
 
 | ID | Status | Evidence |
 |---|---|---|
-| T1 DO < 5: 42 of 116 | PENDING (needs data) | `tests/test_loader.py::test_t1_do_below_5` |
-| T2 BOD > 3: 100 of 112 | PENDING (needs data) | `test_t2_bod_above_3` |
+| T1 DO < 5: 42 of 116 | PASS (42 of 116) | `tests/test_loader.py::test_t1_do_below_5` |
+| T2 BOD > 3: 100 of 112 | PASS (100 of 112) | `test_t2_bod_above_3` |
 | T3 BDL / ND | PASS | `test_t3_bdl_nd_status` |
 | T4 missing codes | PASS | `test_t4_missing_codes`, unknown codes raise |
 | T5 boundaries | PASS | `test_t5_boundaries` |
 | T6 determinism | PASS | `test_t6_deterministic` (shuffled input, identical output) |
 | T7 missing never a pass | PASS (reworded, see D15) | `test_t7_*` |
-| T8 evidence | PASS synthetic; real page check PENDING | `test_t8_evidence`, `test_t8_real_pages` |
+| T8 evidence | PASS (every measured row has a page) | `test_t8_evidence`, `test_t8_real_pages` |
 | T9 guard | PASS | `tests/test_guard.py` |
 | T10 diagnosis | PASS | 11 tag cases + synthetic table |
 | T11 intake | PASS | `tests/test_intake.py` |
@@ -35,13 +46,12 @@ Acceptance items A1 to A11 are in IMPLEMENTATION_PLAN; they depend on the UI and
 - The whole thing runs with no key and no network.
 
 ## What doesn't (yet)
-- Not run on real data. The CPCB CSV parser handles long (`class, parameter, criteria|min|max`) and wide (`parameter, A, B, C...`) layouts; any other layout raises a clear error.
-- Metal names are matched exactly (`Chromium, Lead, Zinc, Copper`, D16).
+- The data CSVs are our own extraction, not an organiser pack: spot-check 10 rows.
+- Ask-the-data "no baseline" question answers "Not in the data": no ghat lacks a baseline overall (per-table NO BASELINE tags exist in the diagnosis).
 - No live Cerebras call has been made, so model IDs and the tool-calling/structured-output behaviour are unverified.
 - `llm.py` is about 240 lines (over the ~200 guideline).
 
 ## Manual checks still owed
-1. Add the CSVs and run `pytest -q`. T1/T2 must match or be explained in DECISIONS.md.
 2. Check 10 random rows against the PDFs and open 5 evidence links.
 3. Native Hindi speaker reads `templates/brief_hi.md.j2` (HI-01 to HI-27) and the Hindi banned list in `config.yaml`.
 4. Review the Claim Guard banned-phrase list.

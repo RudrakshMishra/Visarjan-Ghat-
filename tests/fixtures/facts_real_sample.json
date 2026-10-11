@@ -1,0 +1,1386 @@
+{
+  "generated_for": "Durga visarjan 2026-10-20",
+  "class": "B",
+  "target_date": "2026-10-20",
+  "after_phase_date": "2026-10-27",
+  "n_ghats": 7,
+  "n_top": 3,
+  "limits": {
+    "do_min": 5.0,
+    "bod_max": 3.0,
+    "ph_min": 6.5,
+    "ph_max": 8.5
+  },
+  "years": [
+    2023,
+    2024,
+    2025
+  ],
+  "ghats": [
+    {
+      "site": "Bairagarh (Sant Hirdaram) kund",
+      "rank": 1,
+      "score": 52.9,
+      "confidence": "High",
+      "coverage_pct": 87,
+      "tags": [],
+      "reasons": [
+        {
+          "text_key": "do_zero",
+          "params": {
+            "value": 0.0,
+            "festival": "Ganesh",
+            "year": 2025,
+            "phase": "during",
+            "limit": 5.0
+          },
+          "page": 28,
+          "year_report": 2025
+        },
+        {
+          "text_key": "bod_above_limit",
+          "params": {
+            "value": 13.2,
+            "festival": "Ganesh",
+            "year": 2024,
+            "phase": "during",
+            "limit": 3.0
+          },
+          "page": 69,
+          "year_report": 2024
+        },
+        {
+          "text_key": "chronic",
+          "params": {
+            "parameter": "BOD",
+            "festival": "Ganesh",
+            "year": 2024,
+            "count": 6
+          },
+          "page": 69,
+          "year_report": 2024
+        },
+        {
+          "text_key": "event_linked",
+          "params": {
+            "parameter": "Dissolved oxygen",
+            "festival": "Ganesh",
+            "year": 2024,
+            "count": 2
+          },
+          "page": 69,
+          "year_report": 2024
+        },
+        {
+          "text_key": "persisting",
+          "params": {
+            "parameter": "Dissolved oxygen",
+            "festival": "Ganesh",
+            "year": 2024,
+            "count": 2
+          },
+          "page": 69,
+          "year_report": 2024
+        },
+        {
+          "text_key": "not_sampled",
+          "params": {
+            "count": 6,
+            "expected": 45
+          },
+          "page": null,
+          "year_report": null
+        },
+        {
+          "text_key": "table_absent",
+          "params": {
+            "festival": "Durga",
+            "year": 2025
+          },
+          "page": null,
+          "year_report": 2025
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Durga",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 60,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Zinc",
+            "festival": "Durga",
+            "year": 2023,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 60,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Ganesh",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 26,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Lead",
+            "festival": "Ganesh",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 26,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Ganesh",
+            "year": 2024,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 69,
+          "year_report": 2024
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Lead",
+            "festival": "Ganesh",
+            "year": 2024,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 69,
+          "year_report": 2024
+        }
+      ],
+      "actions": [
+        {
+          "key": "aerate",
+          "site": "Bairagarh (Sant Hirdaram) kund"
+        },
+        {
+          "key": "clean",
+          "site": "Bairagarh (Sant Hirdaram) kund"
+        },
+        {
+          "key": "test",
+          "site": "Bairagarh (Sant Hirdaram) kund"
+        }
+      ]
+    },
+    {
+      "site": "Malikhedi kund",
+      "rank": 2,
+      "score": 40.9,
+      "confidence": "High",
+      "coverage_pct": 87,
+      "tags": [],
+      "reasons": [
+        {
+          "text_key": "do_below_limit",
+          "params": {
+            "value": 0.6,
+            "festival": "Ganesh",
+            "year": 2025,
+            "phase": "during",
+            "limit": 5.0
+          },
+          "page": 29,
+          "year_report": 2025
+        },
+        {
+          "text_key": "bod_above_limit",
+          "params": {
+            "value": 16.8,
+            "festival": "Ganesh",
+            "year": 2023,
+            "phase": "after",
+            "limit": 3.0
+          },
+          "page": 27,
+          "year_report": 2023
+        },
+        {
+          "text_key": "chronic",
+          "params": {
+            "parameter": "Dissolved oxygen",
+            "festival": "Ganesh",
+            "year": 2024,
+            "count": 6
+          },
+          "page": 71,
+          "year_report": 2024
+        },
+        {
+          "text_key": "persisting",
+          "params": {
+            "parameter": "Dissolved oxygen",
+            "festival": "Ganesh",
+            "year": 2023,
+            "count": 2
+          },
+          "page": 27,
+          "year_report": 2023
+        },
+        {
+          "text_key": "not_sampled",
+          "params": {
+            "count": 6,
+            "expected": 45
+          },
+          "page": null,
+          "year_report": null
+        },
+        {
+          "text_key": "table_absent",
+          "params": {
+            "festival": "Durga",
+            "year": 2025
+          },
+          "page": null,
+          "year_report": 2025
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Durga",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 61,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Lead",
+            "festival": "Durga",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 61,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Ganesh",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 27,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Lead",
+            "festival": "Ganesh",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 27,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Zinc",
+            "festival": "Ganesh",
+            "year": 2023,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 27,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Ganesh",
+            "year": 2024,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 71,
+          "year_report": 2024
+        }
+      ],
+      "actions": [
+        {
+          "key": "aerate",
+          "site": "Malikhedi kund"
+        },
+        {
+          "key": "clean",
+          "site": "Malikhedi kund"
+        },
+        {
+          "key": "test",
+          "site": "Malikhedi kund"
+        }
+      ]
+    },
+    {
+      "site": "Shahpura ghat",
+      "rank": 3,
+      "score": 40.9,
+      "confidence": "High",
+      "coverage_pct": 100,
+      "tags": [],
+      "reasons": [
+        {
+          "text_key": "do_below_limit",
+          "params": {
+            "value": 2.5,
+            "festival": "Durga",
+            "year": 2025,
+            "phase": "pre",
+            "limit": 5.0
+          },
+          "page": 65,
+          "year_report": 2025
+        },
+        {
+          "text_key": "bod_above_limit",
+          "params": {
+            "value": 11.6,
+            "festival": "Durga",
+            "year": 2024,
+            "phase": "after",
+            "limit": 3.0
+          },
+          "page": 26,
+          "year_report": 2024
+        },
+        {
+          "text_key": "chronic",
+          "params": {
+            "parameter": "BOD",
+            "festival": "Ganesh",
+            "year": 2025,
+            "count": 8
+          },
+          "page": 30,
+          "year_report": 2025
+        },
+        {
+          "text_key": "persisting",
+          "params": {
+            "parameter": "Dissolved oxygen",
+            "festival": "Durga",
+            "year": 2024,
+            "count": 1
+          },
+          "page": 26,
+          "year_report": 2024
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Lead",
+            "festival": "Durga",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 60,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Zinc",
+            "festival": "Durga",
+            "year": 2023,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 60,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Ganesh",
+            "year": 2024,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 72,
+          "year_report": 2024
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Lead",
+            "festival": "Ganesh",
+            "year": 2024,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 72,
+          "year_report": 2024
+        }
+      ],
+      "actions": [
+        {
+          "key": "aerate",
+          "site": "Shahpura ghat"
+        },
+        {
+          "key": "clean",
+          "site": "Shahpura ghat"
+        }
+      ]
+    },
+    {
+      "site": "Hathaikheda kund",
+      "rank": 4,
+      "score": 39.8,
+      "confidence": "High",
+      "coverage_pct": 100,
+      "tags": [],
+      "reasons": [
+        {
+          "text_key": "bod_above_limit",
+          "params": {
+            "value": 13.2,
+            "festival": "Ganesh",
+            "year": 2024,
+            "phase": "during",
+            "limit": 3.0
+          },
+          "page": 71,
+          "year_report": 2024
+        },
+        {
+          "text_key": "ph_outside_range",
+          "params": {
+            "value": 9.2,
+            "festival": "Durga",
+            "year": 2024,
+            "phase": "pre",
+            "low": 6.5,
+            "high": 8.5
+          },
+          "page": 23,
+          "year_report": 2024
+        },
+        {
+          "text_key": "chronic",
+          "params": {
+            "parameter": "BOD",
+            "festival": "Ganesh",
+            "year": 2025,
+            "count": 6
+          },
+          "page": 29,
+          "year_report": 2025
+        },
+        {
+          "text_key": "event_linked",
+          "params": {
+            "parameter": "pH",
+            "festival": "Ganesh",
+            "year": 2025,
+            "count": 3
+          },
+          "page": 29,
+          "year_report": 2025
+        },
+        {
+          "text_key": "persisting",
+          "params": {
+            "parameter": "BOD",
+            "festival": "Ganesh",
+            "year": 2023,
+            "count": 1
+          },
+          "page": 27,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Durga",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 59,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Lead",
+            "festival": "Durga",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 59,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Zinc",
+            "festival": "Durga",
+            "year": 2023,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 59,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Durga",
+            "year": 2025,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 64,
+          "year_report": 2025
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Lead",
+            "festival": "Durga",
+            "year": 2025,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 64,
+          "year_report": 2025
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Ganesh",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 27,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Lead",
+            "festival": "Ganesh",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 27,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Ganesh",
+            "year": 2024,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 71,
+          "year_report": 2024
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Lead",
+            "festival": "Ganesh",
+            "year": 2024,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 71,
+          "year_report": 2024
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Zinc",
+            "festival": "Ganesh",
+            "year": 2024,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 71,
+          "year_report": 2024
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Zinc",
+            "festival": "Ganesh",
+            "year": 2025,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 29,
+          "year_report": 2025
+        }
+      ],
+      "actions": [
+        {
+          "key": "clean",
+          "site": "Hathaikheda kund"
+        }
+      ]
+    },
+    {
+      "site": "Rani Kamlapati (Kamla Park) ghat",
+      "rank": 5,
+      "score": 36.4,
+      "confidence": "High",
+      "coverage_pct": 100,
+      "tags": [],
+      "reasons": [
+        {
+          "text_key": "do_below_limit",
+          "params": {
+            "value": 2.4,
+            "festival": "Durga",
+            "year": 2025,
+            "phase": "during",
+            "limit": 5.0
+          },
+          "page": 64,
+          "year_report": 2025
+        },
+        {
+          "text_key": "bod_above_limit",
+          "params": {
+            "value": 9.2,
+            "festival": "Ganesh",
+            "year": 2023,
+            "phase": "after",
+            "limit": 3.0
+          },
+          "page": 27,
+          "year_report": 2023
+        },
+        {
+          "text_key": "chronic",
+          "params": {
+            "parameter": "BOD",
+            "festival": "Ganesh",
+            "year": 2025,
+            "count": 8
+          },
+          "page": 29,
+          "year_report": 2025
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Ganesh",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 27,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Lead",
+            "festival": "Ganesh",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 27,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Zinc",
+            "festival": "Ganesh",
+            "year": 2023,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 27,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Ganesh",
+            "year": 2024,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 70,
+          "year_report": 2024
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Zinc",
+            "festival": "Ganesh",
+            "year": 2025,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 29,
+          "year_report": 2025
+        }
+      ],
+      "actions": [
+        {
+          "key": "aerate",
+          "site": "Rani Kamlapati (Kamla Park) ghat"
+        },
+        {
+          "key": "clean",
+          "site": "Rani Kamlapati (Kamla Park) ghat"
+        }
+      ]
+    },
+    {
+      "site": "Khatlapura ghat",
+      "rank": 6,
+      "score": 27.0,
+      "confidence": "High",
+      "coverage_pct": 98,
+      "tags": [],
+      "reasons": [
+        {
+          "text_key": "do_below_limit",
+          "params": {
+            "value": 4.0,
+            "festival": "Ganesh",
+            "year": 2024,
+            "phase": "during",
+            "limit": 5.0
+          },
+          "page": 69,
+          "year_report": 2024
+        },
+        {
+          "text_key": "bod_above_limit",
+          "params": {
+            "value": 11.2,
+            "festival": "Ganesh",
+            "year": 2023,
+            "phase": "after",
+            "limit": 3.0
+          },
+          "page": 26,
+          "year_report": 2023
+        },
+        {
+          "text_key": "ph_outside_range",
+          "params": {
+            "value": 6.49,
+            "festival": "Ganesh",
+            "year": 2024,
+            "phase": "during",
+            "low": 6.5,
+            "high": 8.5
+          },
+          "page": 69,
+          "year_report": 2024
+        },
+        {
+          "text_key": "chronic",
+          "params": {
+            "parameter": "BOD",
+            "festival": "Ganesh",
+            "year": 2025,
+            "count": 7
+          },
+          "page": 28,
+          "year_report": 2025
+        },
+        {
+          "text_key": "event_linked",
+          "params": {
+            "parameter": "pH",
+            "festival": "Ganesh",
+            "year": 2024,
+            "count": 2
+          },
+          "page": 69,
+          "year_report": 2024
+        },
+        {
+          "text_key": "persisting",
+          "params": {
+            "parameter": "Dissolved oxygen",
+            "festival": "Durga",
+            "year": 2024,
+            "count": 2
+          },
+          "page": 24,
+          "year_report": 2024
+        },
+        {
+          "text_key": "not_sampled",
+          "params": {
+            "count": 1,
+            "expected": 54
+          },
+          "page": null,
+          "year_report": null
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Durga",
+            "year": 2025,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 64,
+          "year_report": 2025
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Chromium",
+            "festival": "Ganesh",
+            "year": 2024,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 69,
+          "year_report": 2024
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Ganesh",
+            "year": 2024,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 69,
+          "year_report": 2024
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Zinc",
+            "festival": "Ganesh",
+            "year": 2024,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 69,
+          "year_report": 2024
+        }
+      ],
+      "actions": [
+        {
+          "key": "aerate",
+          "site": "Khatlapura ghat"
+        },
+        {
+          "key": "clean",
+          "site": "Khatlapura ghat"
+        },
+        {
+          "key": "test",
+          "site": "Khatlapura ghat"
+        }
+      ]
+    },
+    {
+      "site": "Prempura ghat",
+      "rank": 7,
+      "score": 21.6,
+      "confidence": "High",
+      "coverage_pct": 93,
+      "tags": [],
+      "reasons": [
+        {
+          "text_key": "do_below_limit",
+          "params": {
+            "value": 3.9,
+            "festival": "Ganesh",
+            "year": 2024,
+            "phase": "during",
+            "limit": 5.0
+          },
+          "page": 70,
+          "year_report": 2024
+        },
+        {
+          "text_key": "bod_above_limit",
+          "params": {
+            "value": 6.8,
+            "festival": "Ganesh",
+            "year": 2024,
+            "phase": "during",
+            "limit": 3.0
+          },
+          "page": 70,
+          "year_report": 2024
+        },
+        {
+          "text_key": "ph_outside_range",
+          "params": {
+            "value": 8.55,
+            "festival": "Ganesh",
+            "year": 2024,
+            "phase": "during",
+            "low": 6.5,
+            "high": 8.5
+          },
+          "page": 70,
+          "year_report": 2024
+        },
+        {
+          "text_key": "chronic",
+          "params": {
+            "parameter": "BOD",
+            "festival": "Ganesh",
+            "year": 2025,
+            "count": 4
+          },
+          "page": 28,
+          "year_report": 2025
+        },
+        {
+          "text_key": "event_linked",
+          "params": {
+            "parameter": "Dissolved oxygen",
+            "festival": "Durga",
+            "year": 2025,
+            "count": 3
+          },
+          "page": 65,
+          "year_report": 2025
+        },
+        {
+          "text_key": "persisting",
+          "params": {
+            "parameter": "BOD",
+            "festival": "Durga",
+            "year": 2024,
+            "count": 1
+          },
+          "page": 25,
+          "year_report": 2024
+        },
+        {
+          "text_key": "not_sampled",
+          "params": {
+            "count": 4,
+            "expected": 54
+          },
+          "page": null,
+          "year_report": null
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Durga",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 60,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Lead",
+            "festival": "Durga",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 60,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Zinc",
+            "festival": "Durga",
+            "year": 2023,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 60,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Ganesh",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 26,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Lead",
+            "festival": "Ganesh",
+            "year": 2023,
+            "flag": "above detection during event window",
+            "factor": 3
+          },
+          "page": 26,
+          "year_report": 2023
+        },
+        {
+          "text_key": "metals_watch",
+          "params": {
+            "parameter": "Copper",
+            "festival": "Ganesh",
+            "year": 2024,
+            "flag": "during is 3 times pre or more",
+            "factor": 3
+          },
+          "page": 70,
+          "year_report": 2024
+        }
+      ],
+      "actions": [
+        {
+          "key": "aerate",
+          "site": "Prempura ghat"
+        },
+        {
+          "key": "clean",
+          "site": "Prempura ghat"
+        },
+        {
+          "key": "test",
+          "site": "Prempura ghat"
+        }
+      ]
+    }
+  ],
+  "gap_items": [
+    {
+      "key": "table_absent",
+      "params": {
+        "site": "Bairagarh (Sant Hirdaram) kund",
+        "festival": "Durga",
+        "year": 2025
+      }
+    },
+    {
+      "key": "table_absent",
+      "params": {
+        "site": "Malikhedi kund",
+        "festival": "Durga",
+        "year": 2025
+      }
+    },
+    {
+      "key": "not_sampled",
+      "params": {
+        "site": "Bairagarh (Sant Hirdaram) kund",
+        "count": 6,
+        "expected": 45
+      }
+    },
+    {
+      "key": "not_sampled",
+      "params": {
+        "site": "Malikhedi kund",
+        "count": 6,
+        "expected": 45
+      }
+    },
+    {
+      "key": "not_sampled",
+      "params": {
+        "site": "Khatlapura ghat",
+        "count": 1,
+        "expected": 54
+      }
+    },
+    {
+      "key": "not_sampled",
+      "params": {
+        "site": "Prempura ghat",
+        "count": 4,
+        "expected": 54
+      }
+    },
+    {
+      "key": "placeholder",
+      "params": {
+        "parameter": "Chromium",
+        "value": 0.03,
+        "cells": 12,
+        "festival": "Durga",
+        "year": 2025
+      }
+    },
+    {
+      "key": "placeholder",
+      "params": {
+        "parameter": "Copper",
+        "value": 0.018,
+        "cells": 7,
+        "festival": "Durga",
+        "year": 2025
+      }
+    },
+    {
+      "key": "placeholder",
+      "params": {
+        "parameter": "Chromium",
+        "value": 0.03,
+        "cells": 17,
+        "festival": "Ganesh",
+        "year": 2025
+      }
+    },
+    {
+      "key": "placeholder",
+      "params": {
+        "parameter": "Copper",
+        "value": 0.018,
+        "cells": 6,
+        "festival": "Ganesh",
+        "year": 2025
+      }
+    },
+    {
+      "key": "placeholder",
+      "params": {
+        "parameter": "Lead",
+        "value": 0.031,
+        "cells": 17,
+        "festival": "Ganesh",
+        "year": 2025
+      }
+    }
+  ],
+  "limits_items": [
+    {
+      "key": "units_assumed",
+      "params": {}
+    },
+    {
+      "key": "four_metals_only",
+      "params": {}
+    },
+    {
+      "key": "kamla_ambiguity",
+      "params": {}
+    },
+    {
+      "key": "table_absent",
+      "params": {
+        "site": "Bairagarh (Sant Hirdaram) kund",
+        "festival": "Durga",
+        "year": 2025
+      }
+    },
+    {
+      "key": "table_absent",
+      "params": {
+        "site": "Malikhedi kund",
+        "festival": "Durga",
+        "year": 2025
+      }
+    },
+    {
+      "key": "placeholder",
+      "params": {
+        "parameter": "Chromium",
+        "value": 0.03,
+        "cells": 12,
+        "festival": "Durga",
+        "year": 2025
+      }
+    },
+    {
+      "key": "placeholder",
+      "params": {
+        "parameter": "Copper",
+        "value": 0.018,
+        "cells": 7,
+        "festival": "Durga",
+        "year": 2025
+      }
+    },
+    {
+      "key": "placeholder",
+      "params": {
+        "parameter": "Chromium",
+        "value": 0.03,
+        "cells": 17,
+        "festival": "Ganesh",
+        "year": 2025
+      }
+    },
+    {
+      "key": "placeholder",
+      "params": {
+        "parameter": "Copper",
+        "value": 0.018,
+        "cells": 6,
+        "festival": "Ganesh",
+        "year": 2025
+      }
+    },
+    {
+      "key": "placeholder",
+      "params": {
+        "parameter": "Lead",
+        "value": 0.031,
+        "cells": 17,
+        "festival": "Ganesh",
+        "year": 2025
+      }
+    }
+  ],
+  "gaps": [
+    "Bairagarh (Sant Hirdaram) kund has no Durga 2025 table in the report.",
+    "Malikhedi kund has no Durga 2025 table in the report.",
+    "Bairagarh (Sant Hirdaram) kund: 6 of 45 required readings are not sampled.",
+    "Malikhedi kund: 6 of 45 required readings are not sampled.",
+    "Khatlapura ghat: 1 of 54 required readings are not sampled.",
+    "Prempura ghat: 4 of 54 required readings are not sampled.",
+    "Chromium shows the same value 0.03 at 12 places in Durga 2025: possible placeholder, verify in report.",
+    "Copper shows the same value 0.018 at 7 places in Durga 2025: possible placeholder, verify in report.",
+    "Chromium shows the same value 0.03 at 17 places in Ganesh 2025: possible placeholder, verify in report.",
+    "Copper shows the same value 0.018 at 6 places in Ganesh 2025: possible placeholder, verify in report.",
+    "Lead shows the same value 0.031 at 17 places in Ganesh 2025: possible placeholder, verify in report."
+  ],
+  "limits_panel": [
+    "Units are assumed to be mg/l where the report does not print them.",
+    "Only four metals are reported (chromium, lead, zinc, copper); they have no Class B limit.",
+    "Rani Kamlapati and Kamla Park may be two different places recorded under one name.",
+    "Bairagarh (Sant Hirdaram) kund has no Durga 2025 table in the report.",
+    "Malikhedi kund has no Durga 2025 table in the report.",
+    "Chromium shows the same value 0.03 at 12 places in Durga 2025: possible placeholder, verify in report.",
+    "Copper shows the same value 0.018 at 7 places in Durga 2025: possible placeholder, verify in report.",
+    "Chromium shows the same value 0.03 at 17 places in Ganesh 2025: possible placeholder, verify in report.",
+    "Copper shows the same value 0.018 at 6 places in Ganesh 2025: possible placeholder, verify in report.",
+    "Lead shows the same value 0.031 at 17 places in Ganesh 2025: possible placeholder, verify in report."
+  ],
+  "allowed_numbers": [
+    "0.0",
+    "0.018",
+    "0.03",
+    "0.031",
+    "0.6",
+    "1",
+    "2",
+    "2.4",
+    "2.5",
+    "3",
+    "3.0",
+    "3.9",
+    "4",
+    "4.0",
+    "5",
+    "5.0",
+    "6",
+    "6.49",
+    "6.5",
+    "6.8",
+    "7",
+    "8",
+    "8.5",
+    "8.55",
+    "9.2",
+    "10",
+    "11.2",
+    "11.6",
+    "12",
+    "13.2",
+    "16.8",
+    "17",
+    "20",
+    "21.6",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "27.0",
+    "28",
+    "29",
+    "30",
+    "36.4",
+    "39.8",
+    "40.9",
+    "45",
+    "52.9",
+    "54",
+    "59",
+    "60",
+    "61",
+    "64",
+    "65",
+    "69",
+    "70",
+    "71",
+    "72",
+    "87",
+    "93",
+    "98",
+    "100",
+    "2023",
+    "2024",
+    "2025",
+    "2026"
+  ]
+}

@@ -63,6 +63,6 @@
 {# HI-25 #}- यह लोगों, पशुओं या मछलियों पर असर के बारे में कुछ नहीं बताती।
 {# HI-26 #}- यह नहीं बताती कि माप क्यों बदला; "विसर्जन अवधि" का अर्थ केवल इतना है कि माप विसर्जन के आसपास लिया गया।
 {# HI-27 #}- यह केवल पुरानी रिपोर्टों ({{ f.years|first }} से {{ f.years|last }}) पर आधारित है; {{ f.target_date }} के लिए नए माप ज़रूरी हैं।
-{% for i in f.limits_items %}
+{% for i in f.limits_items %}{% if i.key in ("units_assumed", "four_metals_only", "kamla_ambiguity") %}
 - {{ item(i) }}
-{% endfor %}
+{% endif %}{% endfor %}

@@ -60,7 +60,8 @@ def run_tool(name: str, args: dict, df, rules, cfg, facts: dict | None = None) -
         return {"result": out, "source_page": pages[0] if pages else None,
                 "url": next((r["url"] for g in out for r in g["reasons"] if r["url"]), None)}
     if name == "compare_years":
-        g = df[(df["site"] == site) & (df["parameter"] == args["parameter"])].sort_values(["year", "festival", "phase"])
+        g = df[(df["site"] == site) & (df["parameter"] == args["parameter"])]
+        g = g.assign(_o=g["phase"].map({"pre": 0, "during": 1, "after": 2})).sort_values(["year", "festival", "_o"])
         if g.empty:
             return _not_in_data(f"no {args['parameter']} readings for {site}")
         rows = [{**evidence_for(r, cfg), "status": r["status"]} for _, r in g.iterrows()]

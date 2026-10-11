@@ -27,12 +27,12 @@ _EN_ITEMS = {
 
 
 def fmt_num(x) -> str:
-    """Single number format for facts, templates and guard: ints plain, floats up to 2 decimals."""
+    """Single number format for facts, templates and guard: ints plain, floats up to 4 decimals (as printed)."""
     if isinstance(x, bool):
         raise TypeError("bool is not a number")
     if isinstance(x, (int, np.integer)):
         return str(int(x))
-    s = f"{float(x):.2f}".rstrip("0")
+    s = f"{float(x):.4f}".rstrip("0")
     return s + "0" if s.endswith(".") else s
 
 
