@@ -1,0 +1,17 @@
+llm:
+  provider: none        # cerebras | none
+  models:
+    brief: qwen-3.8-27b
+    ask: qwen-3.8-27b
+  n_candidates: 3
+  temperature: 0.3
+  timeout_s: 20
+  max_retries: 2
+  max_tool_rounds: 4
+  cache: true
+scoring:
+  weights:
+    severity: 0.45
+    persistence: 0.35
+    event_jump: 0.20
+  recency_years: {2026: 1.0, 2025: 1.0, 2024: 0.7, 2023: 0.5}

@@ -1,0 +1,11 @@
+streamlit
+pandas
+plotly
+cerebras_cloud_sdk
+pyyaml
+jinja2
+pytest
+streamlit-folium
+folium
+speechrecognition
+gtts
