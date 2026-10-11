@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" aria-label="Bhopal Upper Lake Ghat Sunset Background">
+  <defs>
+    <!-- Sky & Lake Gradients -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#081F3E"/>
+      <stop offset="35%" stop-color="#123B68"/>
+      <stop offset="70%" stop-color="#C25E2C"/>
+      <stop offset="100%" stop-color="#EAA15C"/>
+    </linearGradient>
+    <linearGradient id="lakeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#A24B22"/>
+      <stop offset="25%" stop-color="#3D2B4A"/>
+      <stop offset="60%" stop-color="#0C203D"/>
+      <stop offset="100%" stop-color="#051329"/>
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="65%" cy="58%" r="40%">
+      <stop offset="0%" stop-color="#FFEAA7" stop-opacity="0.95"/>
+      <stop offset="30%" stop-color="#FF9F43" stop-opacity="0.6"/>
+      <stop offset="70%" stop-color="#E15F41" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#081F3E" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hillsGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2D1C38"/>
+      <stop offset="100%" stop-color="#0F1829"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1600" height="900" fill="url(#skyGrad)"/>
+
+  <!-- Sun Glow & Horizon Light -->
+  <circle cx="1040" cy="520" r="280" fill="url(#sunGlow)"/>
+
+  <!-- Distant Shyamla Hills Silhouette (Bhopal) -->
+  <path d="M0 580 Q 240 510, 480 540 T 960 520 T 1400 550 Q 1520 560, 1600 575 L 1600 620 L 0 620 Z" fill="url(#hillsGrad)" opacity="0.85"/>
+  <path d="M0 600 Q 300 540, 620 570 T 1200 550 T 1600 585 L 1600 640 L 0 640 Z" fill="#0A182F"/>
+
+  <!-- Lake Water Surface -->
+  <rect y="600" width="1600" height="300" fill="url(#lakeGrad)"/>
+
+  <!-- Water Ripples & Sunset Reflection -->
+  <ellipse cx="1040" cy="640" rx="220" ry="8" fill="#FFC078" opacity="0.6"/>
+  <ellipse cx="1040" cy="670" rx="180" ry="6" fill="#FFA94D" opacity="0.5"/>
+  <ellipse cx="1040" cy="710" rx="260" ry="7" fill="#F76707" opacity="0.4"/>
+  <ellipse cx="1040" cy="760" rx="340" ry="8" fill="#D9480F" opacity="0.3"/>
+  <ellipse cx="1040" cy="820" rx="420" ry="10" fill="#9C36B5" opacity="0.2"/>
+
+  <!-- Sacred Ghat Steps & Arch Silhouette (Left Shore) -->
+  <path d="M0 680 L 180 680 L 180 720 L 260 720 L 260 770 L 340 770 L 340 840 L 420 840 L 420 900 L 0 900 Z" fill="#061224"/>
+  <!-- Traditional Ghat Chhatri Canopy -->
+  <path d="M120 680 L 140 630 Q 150 610, 160 630 L 180 680 Z" fill="#061224"/>
+  <line x1="150" y1="610" x2="150" y2="590" stroke="#061224" stroke-width="3"/>
+
+  <!-- Modern VIP Road Cable Bridge Stay Cables Stylization (Right Side) -->
+  <path d="M1380 900 L 1420 460 L 1430 460 L 1470 900 Z" fill="#0A1E38" opacity="0.6"/>
+  <line x1="1425" y1="480" x2="1200" y2="780" stroke="#E2E8F0" stroke-width="1.5" opacity="0.25"/>
+  <line x1="1425" y1="520" x2="1240" y2="780" stroke="#E2E8F0" stroke-width="1.5" opacity="0.25"/>
+  <line x1="1425" y1="560" x2="1280" y2="780" stroke="#E2E8F0" stroke-width="1.5" opacity="0.25"/>
+  <line x1="1425" y1="600" x2="1320" y2="780" stroke="#E2E8F0" stroke-width="1.5" opacity="0.25"/>
+</svg>

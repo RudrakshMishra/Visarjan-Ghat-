@@ -1,0 +1,23 @@
+:root {
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-hindi: 'Noto Sans Devanagari', 'Inter', sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+html[lang="hi"] {
+  font-family: var(--font-hindi);
+  line-height: 1.8;
+}
+
+html[lang="hi"] .font-display {
+  font-family: var(--font-hindi);
+  letter-spacing: normal;
+}
