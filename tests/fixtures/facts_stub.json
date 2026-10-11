@@ -1,0 +1,19 @@
+{
+  "_note": "EXAMPLE VALUES ONLY. Not real data. Replace with scripts/export_facts.py output after Phase 3.",
+  "generated_for": "Durga visarjan 2026-10-20",
+  "class": "B",
+  "ghats": [
+    {"site": "EXAMPLE Ghat A", "rank": 1, "score": 61.2, "confidence": "Medium",
+     "tags": ["No baseline"],
+     "reasons": [{"text_key": "do_below_limit",
+                  "params": {"value": 1.2, "limit": 5, "festival": "Ganesh", "year": 2025, "phase": "during"},
+                  "page": 10, "year_report": 2025}]},
+    {"site": "EXAMPLE Ghat B", "rank": 2, "score": null, "confidence": "Low",
+     "tags": ["Unknown, test first"],
+     "reasons": [{"text_key": "table_absent",
+                  "params": {"festival": "Durga", "year": 2025}, "page": null, "year_report": 2025}]}
+  ],
+  "allowed_numbers": ["1.2", "5", "2025", "10", "61.2", "1", "2", "2026", "20"],
+  "gaps": ["EXAMPLE: units assumed"],
+  "limits_panel": ["EXAMPLE: four metals only"]
+}

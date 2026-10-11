@@ -1,0 +1,72 @@
+# Ghat Watch configuration. Every threshold, weight and ID lives here (TRD 5, 7.5).
+reference_year: 2026
+target_date: "2026-10-20"
+after_phase_date: "2026-10-27"
+class: B
+
+data:
+  readings: data/bhopal_ghats_2023_2025.csv
+  criteria: data/cpcb_water_quality_criteria.csv
+
+scored_parameters: ["Dissolved oxygen", "BOD", "pH"]
+phases: ["pre", "during", "after"]
+festivals: ["Ganesh", "Durga"]
+years: [2023, 2024, 2025]
+
+# Expected CPCB values; load_rules raises if the CSV disagrees.
+class_limits:
+  B: {"Dissolved oxygen": {min: 5}, "BOD": {max: 3}, "pH": {min: 6.5, max: 8.5}}
+  C: {"Dissolved oxygen": {min: 4}, "BOD": {max: 3}, "pH": {min: 6.0, max: 9.0}}
+
+# Severity denominators: value at which severity reaches 1.
+severity_caps:
+  "Dissolved oxygen": 5.0   # (limit - v) / 5
+  "BOD": 9.0                # (v - 3) / 9 -> 12 mg/l caps
+  "pH": 1.0                 # distance outside range / 1
+
+weights: {S: 0.45, P: 0.35, E: 0.20}
+recency: {2026: 1.0, 2025: 1.0, 2024: 0.7, 2023: 0.5}
+
+coverage: {high: 0.80, medium: 0.50}
+
+robustness:
+  weight_sets:
+    base: {S: 0.45, P: 0.35, E: 0.20}
+    severity_heavy: {S: 0.60, P: 0.25, E: 0.15}
+    persistence_heavy: {S: 0.30, P: 0.50, E: 0.20}
+    no_event: {S: 0.55, P: 0.45, E: 0.0}
+  recency: [true, false]
+  classes: [B, C]
+
+metals:
+  jump_factor: 3
+  placeholder_min_cells: 5
+
+report_urls:
+  2025: https://www.mppcb.mp.gov.in/proc/mon/Ganesh_and_Durga_visarjan_report-2025.pdf
+  2024: https://www.mppcb.mp.gov.in/proc/mon/Ganesh_and_Durga_visarjan_report-2024.pdf
+  2023: https://www.mppcb.mp.gov.in/proc/mon/Idol_immer._Report_23_CPCB.pdf
+
+# Claim Guard banned phrases (case-insensitive). Hindi list to be reviewed by the Hindi owner.
+banned_phrases:
+  en: ["caused by", "causes", "health risk", "unsafe to drink", "safe to drink", "safe for bathing",
+       "disease", "illness", "toxic", "poisonous", "is clean", "was clean", "is safe", "was safe",
+       "cancer", "fish kill", "harmful to health"]
+  hi: ["के कारण", "की वजह से", "बीमारी", "रोग", "स्वास्थ्य को खतरा", "स्वास्थ्य के लिए हानिकारक",
+       "जहरीला", "ज़हरीला", "पीने योग्य", "साफ है", "साफ था", "सुरक्षित है", "सुरक्षित था"]
+
+llm:
+  provider: cerebras        # cerebras | none
+  models:
+    brief: gpt-oss-120b
+    ask: gpt-oss-120b
+    fast: qwen-3.8-27b
+  n_candidates: 3
+  temperature: 0.3
+  timeout_s: 20
+  max_retries: 2
+  max_tool_rounds: 4
+  ask_timeout_s: 25
+  cache: true
+  cache_path: .cache/llm_cache.json
+  prompt_version: 1
