@@ -72,6 +72,7 @@ llm:
   backoff_s: 1.0
   max_tool_rounds: 4
   ask_timeout_s: 25
+  max_question_chars: 500   # longer questions never reach the model
   cache: true
   cache_path: .cache/llm_cache.json
   prompt_version: 1
