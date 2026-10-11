@@ -2,10 +2,20 @@ import streamlit as st
 import pandas as pd
 import yaml
 import os
+from ghatwatch.loader import load_readings
+from ghatwatch.askdata import ask_data
+from ghatwatch.guard import check_output
 
 # Load config
 with open("config.yaml", "r") as f:
     config = yaml.safe_load(f)
+
+# Load data - assuming this is the primary file
+@st.cache_data
+def load_all_data():
+    return load_readings("data/bhopal_ghats_2023_2025.csv")
+
+df = load_all_data()
 
 # Sidebar for Auth
 st.sidebar.title("Login")
@@ -47,7 +57,8 @@ else:
             st.markdown(prompt)
 
         with st.chat_message("assistant"):
-            # Placeholder for actual LLM call
-            response = f"Simulated assistant answer to: {prompt}"
+            # Use ask_data and guard
+            response = ask_data(df, prompt)
+            response = check_output(response)
             st.markdown(response)
         st.session_state.messages.append({"role": "assistant", "content": response})
