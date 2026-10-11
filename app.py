@@ -1,83 +1,74 @@
 import streamlit as st
-import pandas as pd
-import yaml
-import os
-from ghatwatch.loader import load_readings
-from ghatwatch.askdata import ask_data
-from ghatwatch.guard import check_output
+from ghatwatch.askdata import answer
+from ghatwatch.guard import guard_badge
+from ghatwatch.service import load_context
 from ghatwatch import voice
 
-# Load config
-with open("config.yaml", "r") as f:
-    config = yaml.safe_load(f)
+WITHHELD = "Answer withheld: it did not pass the Claim Guard."
 
-# Load data - assuming this is the primary file
-@st.cache_data
-def load_all_data():
-    return load_readings("data/bhopal_ghats_2023_2025.csv")
 
-df = load_all_data()
+# Load config, readings and rules once
+@st.cache_resource
+def get_context():
+    return load_context()
 
-# Sidebar for Auth and Settings
-st.sidebar.title("Login & Settings")
-username = st.sidebar.text_input("Username")
-password = st.sidebar.text_input("Password", type="password")
+ctx = get_context()
+
+# Sidebar settings (no login: PRD section 5, plan rule 8)
+st.sidebar.title("Settings")
 
 # Language Selection
 lang = st.sidebar.selectbox("Language", options=["en", "hi", "hng"], format_func=lambda x: {"en": "English", "hi": "Hindi", "hng": "Hinglish"}[x])
 
-if st.sidebar.button("Login"):
-    # Simple auth for hackathon - in real app, use better hashing/session management
-    if username == "admin" and password == "ghatwatch2026":
-        st.session_state.authenticated = True
-        st.sidebar.success("Logged in!")
+# Voice sends audio and answers to Google speech services, so it is off until the officer turns it on
+use_voice = st.sidebar.toggle("Voice input and output", value=False,
+                              help="Sends your recording and the answer text to Google speech services.")
+
+st.title("Ghat Watch Dashboard")
+
+# Placeholder for dashboard content
+st.subheader("Ranking")
+st.write("Loading core data...")
+
+# Chatbot UI
+st.subheader("Multilingual AI Assistant")
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# Chat Input: Text or Audio
+audio_value = st.audio_input("Or record your question...") if use_voice else None
+
+prompt = st.chat_input("Ask a question (Hindi/English/Hinglish)...")
+
+if audio_value:
+    with st.spinner("Transcribing..."):
+        transcript = voice.transcribe_audio(audio_value.read(), lang=lang)
+    if transcript:
+        prompt = transcript
+        st.write(f"Transcribed: {transcript}")
     else:
-        st.sidebar.error("Invalid credentials")
-        st.session_state.authenticated = False
+        st.warning("Could not transcribe the recording. Please type your question.")
 
-if not st.session_state.get("authenticated", False):
-    st.title("Ghat Watch - BMC Officer Portal")
-    st.info("Please log in to access the Ghat Risk Dashboard.")
-else:
-    st.title("Ghat Watch Dashboard")
-    st.write("Welcome, authorized officer.")
+if prompt:
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
 
-    # Placeholder for dashboard content
-    st.subheader("Ranking")
-    st.write("Loading core data...")
+    with st.chat_message("assistant"):
+        # answer() runs the Input Guard, the five fixed data tools and the Claim Guard
+        response, result, _ = answer(prompt, ctx.df, ctx.rules, ctx.cfg)
+        if not result.ok:
+            response = WITHHELD
+        st.markdown(response)
+        st.caption(guard_badge(result))
 
-    # Chatbot UI
-    st.subheader("Multilingual AI Assistant")
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-
-    # Chat Input: Text or Audio
-    audio_value = st.audio_input("Or record your question...")
-
-    prompt = st.chat_input("Ask a question (Hindi/English/Hinglish)...")
-
-    if audio_value:
-        with st.spinner("Transcribing..."):
-            prompt = voice.transcribe_audio(audio_value.read(), lang=lang)
-            st.write(f"Transcribed: {prompt}")
-
-    if prompt:
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
-
-        with st.chat_message("assistant"):
-            # Use ask_data and guard
-            response = ask_data(df, prompt)
-            response = check_output(response)
-            st.markdown(response)
-
-            # Speak the response
+        # Speak the response
+        if use_voice:
             audio_fp = voice.synthesize_speech(response, lang=lang)
             st.audio(audio_fp, format="audio/mp3")
 
-        st.session_state.messages.append({"role": "assistant", "content": response})
+    st.session_state.messages.append({"role": "assistant", "content": response})

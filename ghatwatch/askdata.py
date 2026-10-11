@@ -5,6 +5,7 @@ import json
 import logging
 import re
 import time
+import unicodedata
 
 import pandas as pd
 
@@ -18,6 +19,15 @@ log = logging.getLogger(__name__)
 SYSTEM_ASK = ("Answer the officer's question only from the tool results. Cite the year and report page for "
               "every number. If a tool returns nothing or 'not in the data', say 'not in the data'. "
               "No causes, no health claims. Answer in the language of the question.")
+REFUSAL = "Please ask a question about the ghat water-quality data."
+# English, Hindi (Devanagari) and Hinglish phrasings; \u093c? = optional nukta (questions are NFC-normalised)
+_INJECTION = re.compile(unicodedata.normalize("NFC",
+                        r"ignore (?:all )?(?:previous|prior|above) instructions"
+                        r"|(?:reveal|show|print|repeat) (?:me )?(?:the |your )?system prompt"
+                        r"|api[ _-]?keys?|secret[ _-]?keys?|\.env\b|cerebras_api_key"
+                        r"|instructions? (?:ko )?(?:ignore|bh(?:oo|u)l|chh?od)|system prompt (?:dikha|bata)"
+                        r"|(?:निर्देश|आदेश)\S* (?:को )?(?:अनदेखा|नज\u093c?रअंदाज\u093c?|भूल|छोड\u093c?)"
+                        r"|सिस्टम प्र\S*प्ट|(?:एपीआई|api) (?:की|कुंजी)|(?:गुप्त|सीक्रेट) (?:की|कुंजी)"), re.I)
 
 
 def _fn(name, desc, props=None, req=()):
@@ -131,10 +141,25 @@ def _numbers_in(results: list) -> set[str]:
     return set(extract_numbers(json.dumps(results, ensure_ascii=False, default=str)))
 
 
+def check_question(question, cfg) -> str | None:
+    """Why a question must not reach the model (empty, too long, injection or secret request), else None."""
+    if not isinstance(question, str) or not question.strip():
+        return "empty question"
+    if len(question) > cfg["llm"].get("max_question_chars", 500):
+        return "question too long"
+    if _INJECTION.search(re.sub(r"\s+", " ", unicodedata.normalize("NFC", question))):
+        return "prompt injection or secret request"
+    return None
+
+
 def answer(question: str, df, rules, cfg, client=None) -> tuple[str, GuardResult, list[dict]]:
     """Tool-calling answer (tools only, never response_format) guarded; deterministic fallback."""
     facts = build_facts(df, rules, cfg)
     calls: list[dict] = []
+    reason = check_question(question, cfg)
+    if reason:
+        log.info("ask question rejected: %s", reason)
+        return REFUSAL, guard(REFUSAL, facts, cfg), calls
 
     def fallback():
         name, args = _route(question, df)

@@ -10,3 +10,5 @@ Python package `ghatwatch/` (framework-free). The UI imports only `ghatwatch.ser
 **Claim Guard:** every brief or answer (template or AI) is checked by deterministic code. Every number (Devanagari digits included) must be in `facts.allowed_numbers`, and banned English/Hindi phrases (causes, health claims) fail the text. On failure the template brief is shown. An LLM never verifies an LLM.
 
 **What is sent to Cerebras (external service, optional):** only `facts.json` (public report data, no personal data) and the officer's typed question. Without `CEREBRAS_API_KEY` the app runs fully offline in template mode.
+
+**Voice (external service, optional, off by default):** when the officer turns on "Voice input and output", the recording is sent to Google speech recognition and the answer text to Google text-to-speech (gTTS). With voice off, nothing is sent to Google.
