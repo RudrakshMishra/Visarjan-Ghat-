@@ -5,6 +5,7 @@ import os
 from ghatwatch.loader import load_readings
 from ghatwatch.askdata import ask_data
 from ghatwatch.guard import check_output
+from ghatwatch import voice
 
 # Load config
 with open("config.yaml", "r") as f:
@@ -17,10 +18,13 @@ def load_all_data():
 
 df = load_all_data()
 
-# Sidebar for Auth
-st.sidebar.title("Login")
+# Sidebar for Auth and Settings
+st.sidebar.title("Login & Settings")
 username = st.sidebar.text_input("Username")
 password = st.sidebar.text_input("Password", type="password")
+
+# Language Selection
+lang = st.sidebar.selectbox("Language", options=["en", "hi", "hng"], format_func=lambda x: {"en": "English", "hi": "Hindi", "hng": "Hinglish"}[x])
 
 if st.sidebar.button("Login"):
     # Simple auth for hackathon - in real app, use better hashing/session management
@@ -51,7 +55,17 @@ else:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    if prompt := st.chat_input("Ask a question (Hindi/English/Hinglish)..."):
+    # Chat Input: Text or Audio
+    audio_value = st.audio_input("Or record your question...")
+
+    prompt = st.chat_input("Ask a question (Hindi/English/Hinglish)...")
+
+    if audio_value:
+        with st.spinner("Transcribing..."):
+            prompt = voice.transcribe_audio(audio_value.read(), lang=lang)
+            st.write(f"Transcribed: {prompt}")
+
+    if prompt:
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
@@ -61,4 +75,9 @@ else:
             response = ask_data(df, prompt)
             response = check_output(response)
             st.markdown(response)
+
+            # Speak the response
+            audio_fp = voice.synthesize_speech(response, lang=lang)
+            st.audio(audio_fp, format="audio/mp3")
+
         st.session_state.messages.append({"role": "assistant", "content": response})

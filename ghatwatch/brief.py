@@ -9,14 +9,14 @@ from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
 from ghatwatch.facts import fmt_num
 
-LANGS = ("en", "hi")
+LANGS = ("en", "hi", "hng")
 _ENV = Environment(loader=FileSystemLoader(str(Path(__file__).resolve().parents[1] / "templates")),
                    autoescape=False, trim_blocks=True, lstrip_blocks=True, undefined=StrictUndefined)
 _ENV.filters["num"] = lambda x: "" if x is None else fmt_num(x)
 
 
 def render_brief(facts: dict, lang: str, mode: str = "template") -> str:
-    """Render the brief in 'en' or 'hi'. mode='ai' tries Cerebras and falls back to template."""
+    """Render the brief in 'en', 'hi', or 'hng'."""
     if lang not in LANGS:
         raise ValueError(f"lang must be one of {LANGS}, got {lang!r}")
     if mode == "ai":
@@ -25,8 +25,12 @@ def render_brief(facts: dict, lang: str, mode: str = "template") -> str:
         return brief_with_guard(facts, lang, load_config())[0]
     if mode != "template":
         raise ValueError(f"unknown mode {mode!r}")
+
+    # For hng (hinglish), fallback to English template if not specifically provided
+    template_lang = "hi" if lang == "hi" else "en"
+
     top = facts["ghats"][: facts["n_top"]]
-    text = _ENV.get_template(f"brief_{lang}.md.j2").render(f=facts, top=top)
+    text = _ENV.get_template(f"brief_{template_lang}.md.j2").render(f=facts, top=top)
     return re.sub(r"\n{3,}", "\n\n", text).strip() + "\n"
 
 

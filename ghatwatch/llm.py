@@ -19,7 +19,8 @@ SYSTEM_BRIEF = ("Rewrite this water-quality brief for a municipal officer in pla
                 "no causes and no health claims. If something is not in the facts, do not mention it. "
                 "Keep technical terms DO, BOD, pH and CPCB in English letters.")
 _HEAD = {"en": ("Top ghats", "Data gaps", "Suggested actions", "What this does not tell you", "pages"),
-         "hi": ("सबसे अधिक जोखिम वाले घाट", "आँकड़ों की कमी", "सुझाए गए कदम", "यह रिपोर्ट क्या नहीं बताती", "पेज")}
+         "hi": ("सबसे अधिक जोखिम वाले घाट", "आँकड़ों की कमी", "सुझाए गए कदम", "यह रिपोर्ट क्या नहीं बताती", "पेज"),
+         "hng": ("Sabse zyada risk wale ghat", "Data gaps", "Suggested actions", "Yeh report kya nahi batati", "pages")}
 
 
 class CandidateError(Exception):
@@ -178,7 +179,7 @@ def brief_with_guard(facts: dict, lang: str, cfg, client=None) -> tuple[str, Gua
                 meta.update(source="cerebras", model=model, cached=True, seconds=time.monotonic() - t0)
                 return text, res, meta
         schema = build_brief_schema([g["site"] for g in facts["ghats"]])
-        base = [{"role": "system", "content": SYSTEM_BRIEF.format(language="Hindi" if lang == "hi" else "English")},
+        base = [{"role": "system", "content": SYSTEM_BRIEF.format(language={"hi": "Hindi", "hng": "Hinglish", "en": "English"}.get(lang, "English"))},
                 {"role": "user", "content": "FACTS:\n" + json.dumps(facts, ensure_ascii=False)
                  + "\n\nSTANDARD TEXT:\n" + render_brief(facts, lang)}]
         n = int(cfg["llm"]["n_candidates"])
