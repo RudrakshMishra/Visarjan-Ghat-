@@ -349,7 +349,7 @@
       ]
     },
     {
-      "site": "Shahpura ghat",
+      "site": "Shahpura lake ghat",
       "rank": 3,
       "score": 40.9,
       "confidence": "High",
@@ -454,16 +454,16 @@
       "actions": [
         {
           "key": "aerate",
-          "site": "Shahpura ghat"
+          "site": "Shahpura lake ghat"
         },
         {
           "key": "clean",
-          "site": "Shahpura ghat"
+          "site": "Shahpura lake ghat"
         }
       ]
     },
     {
-      "site": "Hathaikheda kund",
+      "site": "Hathaikheda dam / kund",
       "rank": 4,
       "score": 39.8,
       "confidence": "High",
@@ -664,12 +664,12 @@
       "actions": [
         {
           "key": "clean",
-          "site": "Hathaikheda kund"
+          "site": "Hathaikheda dam / kund"
         }
       ]
     },
     {
-      "site": "Rani Kamlapati (Kamla Park) ghat",
+      "site": "Rani Kamlapati ghat / Kamla Park kund",
       "rank": 5,
       "score": 36.4,
       "confidence": "High",
@@ -775,11 +775,11 @@
       "actions": [
         {
           "key": "aerate",
-          "site": "Rani Kamlapati (Kamla Park) ghat"
+          "site": "Rani Kamlapati ghat / Kamla Park kund"
         },
         {
           "key": "clean",
-          "site": "Rani Kamlapati (Kamla Park) ghat"
+          "site": "Rani Kamlapati ghat / Kamla Park kund"
         }
       ]
     },

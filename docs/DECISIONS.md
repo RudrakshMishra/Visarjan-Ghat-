@@ -32,3 +32,4 @@
 | D28 | CPCB criteria CSV transcribed from the CPCB Designated Best Use table (A-E) | Needed for rules; values verified against config expectations by `load_rules` | None |
 | D29 | `fmt_num` keeps up to 4 decimals | Values like 0.018 / 0.0183 must not be rounded in the brief | 2 decimals (changed printed values) |
 | D30 | Brief "what this does not tell you" lists only general caveats; absent tables and placeholders stay under Data gaps | Avoid duplicates; one page | Repeat both |
+| D31 | Merged teammate force-push (1ad60a0) instead of overwriting: kept their app.py and official data pack, kept our backend/history; their commit backed up on branch backup-shashwat-1ad60a0. Rules reader supports the pack's limit_type layout | No work lost on either side | Force-push over it |

@@ -1,5 +1,7 @@
 # Data sources
 
+**Update:** the official data pack (`bhopal_ghats_2023_2025.csv`, `cpcb_water_quality_criteria.csv`, `sample_bhopal_2025.csv`, `mp_immersion_sites_2023_2025.csv`) was added by a teammate and is now the data in `data/`. Our PDF extraction below matched it exactly: same 1,524 rows, every value and page identical. Only three site names differ in spelling. The extraction is kept as an independent check.
+
 No organiser data pack was available, so the data files were rebuilt from the public MPPCB reports (the same reports the evidence links point to).
 
 | File | Source | How |

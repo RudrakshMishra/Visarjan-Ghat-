@@ -51,3 +51,12 @@ def test_aliases_and_parse():
     assert parse_limit("not exceeding 3 mg/l") == (None, 3)
     with pytest.raises(ValueError):
         parse_limit("see note")
+
+
+def test_official_pack_layout(tmp_path, cfg):
+    p = tmp_path / "o.csv"
+    p.write_text("class,designated_best_use,parameter,limit_type,limit,unit\n"
+                 "B,Bathing,pH,range,6.5-8.5,\nB,Bathing,Dissolved oxygen,min,5,mg/l\n"
+                 "B,Bathing,BOD (5 days 20C),max,3,mg/l\n", encoding="utf-8")
+    r = load_rules(str(p), "B", cfg)
+    assert (r["Dissolved oxygen"].min, r["BOD"].max, r["pH"].max) == (5, 3, 8.5)

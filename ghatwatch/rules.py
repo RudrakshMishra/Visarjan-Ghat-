@@ -60,11 +60,21 @@ def _read_limits(path: str, klass: str) -> dict[str, tuple[float | None, float |
         mincol = next((cols[c] for c in cols if c.startswith("min")), None)
         maxcol = next((cols[c] for c in cols if c.startswith("max")), None)
         lcol = next((cols[c] for c in cols if c in ("limit", "criteria", "value", "criterion")), None)
+        tcol = cols.get("limit_type")
         for _, r in sub.iterrows():
             canon = canonical_parameter(r[pcol])
             if canon is None:
                 continue
-            if mincol or maxcol:
+            if tcol and lcol:  # official pack layout: limit_type in {min, max, range}
+                kind, raw = r[tcol].strip().lower(), r[lcol]
+                if kind == "range":
+                    out[canon] = parse_limit(raw)
+                elif kind in ("min", "max"):
+                    v = float(raw)
+                    out[canon] = (v, None) if kind == "min" else (None, v)
+                else:
+                    raise ValueError(f"Unknown limit_type {r[tcol]!r} for {r[pcol]!r} in {path}")
+            elif mincol or maxcol:
                 lo = float(r[mincol]) if mincol and r[mincol].strip() else None
                 hi = float(r[maxcol]) if maxcol and r[maxcol].strip() else None
                 out[canon] = (lo, hi)
