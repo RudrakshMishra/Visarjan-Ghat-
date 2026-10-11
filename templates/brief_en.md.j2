@@ -1,0 +1,56 @@
+{# English brief. Every number comes from facts; no number is typed in this file. Line tags EN-xx are review anchors. #}
+{% set PH = {"pre": "before immersion in", "during": "during", "after": "one week after"} %}
+{% set CONF = {"High": "high", "Medium": "medium", "Low": "low"} %}
+{% macro reason(r) -%}
+{%- set p = r.params -%}
+{%- if r.text_key in ("do_zero", "do_below_limit") -%}{# EN-01 #}Dissolved oxygen (DO) was {{ p.value|num }} mg/l {{ PH[p.phase] }} {{ p.festival }} {{ p.year }} (limit: {{ p.limit|num }} or more)
+{%- elif r.text_key == "bod_above_limit" -%}{# EN-02 #}BOD was {{ p.value|num }} mg/l {{ PH[p.phase] }} {{ p.festival }} {{ p.year }} (limit: {{ p.limit|num }} or less)
+{%- elif r.text_key == "ph_outside_range" -%}{# EN-03 #}pH was {{ p.value|num }} {{ PH[p.phase] }} {{ p.festival }} {{ p.year }} (allowed range {{ p.low|num }} to {{ p.high|num }})
+{%- elif r.text_key == "chronic" -%}{# EN-04 #}{{ p.parameter }} was already outside the limit before immersion ({{ p.festival }} {{ p.year }})
+{%- elif r.text_key == "event_linked" -%}{# EN-05 #}{{ p.parameter }} was within the limit before immersion and outside it in the event window ({{ p.festival }} {{ p.year }})
+{%- elif r.text_key == "persisting" -%}{# EN-06 #}{{ p.parameter }} was still outside the limit one week after immersion ({{ p.festival }} {{ p.year }})
+{%- elif r.text_key == "no_baseline" -%}{# EN-07 #}No before-immersion reading, so the event window cannot be compared
+{%- elif r.text_key == "not_sampled" -%}{# EN-08 #}{{ p.count }} of {{ p.expected }} required readings were not sampled
+{%- elif r.text_key == "table_absent" -%}{# EN-09 #}The report has no {{ p.festival }} {{ p.year }} table for this ghat
+{%- elif r.text_key == "metals_watch" -%}{# EN-10 #}Metals watch, {{ p.parameter }} ({{ p.festival }} {{ p.year }}): {{ p.flag }}; information only, no Class B limit
+{%- endif -%}
+{%- if r.page %} [{{ r.year_report }} report, page {{ r.page }}]{% endif %}.
+{%- endmacro %}
+{% macro action(a) -%}
+{%- if a.key == "aerate" -%}{# EN-11 #}**{{ a.site }}**: arrange aeration and DO checks before and during immersion.
+{%- elif a.key == "clean" -%}{# EN-12 #}**{{ a.site }}**: plan removal of immersed material and cleaning after the event window.
+{%- elif a.key == "test" -%}{# EN-13 #}**{{ a.site }}**: measure DO, BOD and pH before immersion, on {{ f.target_date }} and on {{ f.after_phase_date }}.
+{%- endif -%}
+{%- endmacro %}
+{# EN-14 #}# Ghat Watch brief: {{ f.generated_for }}
+
+{# EN-15 #}CPCB Class {{ f.class }} limits: DO {{ f.limits.do_min|num }} mg/l or more, BOD {{ f.limits.bod_max|num }} mg/l or less, pH {{ f.limits.ph_min|num }} to {{ f.limits.ph_max|num }}.
+
+## Headline
+{% set g = top[0] %}
+{# EN-16 #}Of {{ f.n_ghats }} ghats, **{{ g.site }}** ranks highest for water-quality risk{% if g.score is not none %} (score {{ g.score|num }}, {{ CONF[g.confidence] }} confidence){% else %} (no measured readings, test first){% endif %}.
+
+{# EN-17 #}## Top {{ f.n_top }} ghats
+{% for g in top %}
+- **{{ g.rank }}. {{ g.site }}**: score {% if g.score is not none %}{{ g.score|num }}{% else %}not available{% endif %}, {{ CONF[g.confidence] }} confidence ({{ g.coverage_pct }}% of expected readings available). {% for r in g.reasons[:2] %}{{ reason(r) }} {% endfor %}
+
+{% endfor %}
+## Data gaps
+{% for t in f.gaps %}
+- {{ t }}
+{% else %}
+- {# EN-18 #}No gaps recorded.
+{% endfor %}
+
+## Suggested actions
+{% for g in f.ghats %}{% for a in g.actions %}{% if g.rank <= f.n_top or a.key == "test" %}
+- {{ action(a) }}
+{% endif %}{% endfor %}{% endfor %}
+
+## What this does not tell you
+{# EN-19 #}- It says nothing about effects on people, animals or fish.
+{# EN-20 #}- It does not explain why a reading changed; "event window" only means the reading was taken around immersion.
+{# EN-21 #}- It uses past reports ({{ f.years|first }} to {{ f.years|last }}) only; new readings for {{ f.target_date }} are needed.
+{% for t in f.limits_panel %}
+- {{ t }}
+{% endfor %}

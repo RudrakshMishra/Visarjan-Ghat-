@@ -1,0 +1,68 @@
+{# Hindi brief, FIRST DRAFT for native-speaker review. Line tags HI-xx are review anchors. No number is typed in this file. #}
+{% set PH = {"pre": "विसर्जन से पहले", "during": "विसर्जन के दौरान", "after": "विसर्जन के एक सप्ताह बाद"} %}
+{% set FEST = {"Ganesh": "गणेश", "Durga": "दुर्गा"} %}
+{% set CONF = {"High": "उच्च", "Medium": "मध्यम", "Low": "कम"} %}
+{% set PARAM = {"Dissolved oxygen": "DO", "BOD": "BOD", "pH": "pH"} %}
+{% macro reason(r) -%}
+{%- set p = r.params -%}
+{%- if r.text_key in ("do_zero", "do_below_limit") -%}{# HI-01 #}{{ FEST.get(p.festival, p.festival) }} {{ p.year }} में {{ PH[p.phase] }} DO {{ p.value|num }} mg/l था (सीमा: {{ p.limit|num }} या अधिक)
+{%- elif r.text_key == "bod_above_limit" -%}{# HI-02 #}{{ FEST.get(p.festival, p.festival) }} {{ p.year }} में {{ PH[p.phase] }} BOD {{ p.value|num }} mg/l था (सीमा: {{ p.limit|num }} या कम)
+{%- elif r.text_key == "ph_outside_range" -%}{# HI-03 #}{{ FEST.get(p.festival, p.festival) }} {{ p.year }} में {{ PH[p.phase] }} pH {{ p.value|num }} था (सीमा: {{ p.low|num }} से {{ p.high|num }})
+{%- elif r.text_key == "chronic" -%}{# HI-04 #}{{ PARAM.get(p.parameter, p.parameter) }} विसर्जन से पहले ही सीमा से बाहर था ({{ FEST.get(p.festival, p.festival) }} {{ p.year }})
+{%- elif r.text_key == "event_linked" -%}{# HI-05 #}{{ PARAM.get(p.parameter, p.parameter) }} विसर्जन से पहले सीमा में था, विसर्जन अवधि में सीमा से बाहर ({{ FEST.get(p.festival, p.festival) }} {{ p.year }})
+{%- elif r.text_key == "persisting" -%}{# HI-06 #}{{ PARAM.get(p.parameter, p.parameter) }} विसर्जन के एक सप्ताह बाद भी सीमा से बाहर था ({{ FEST.get(p.festival, p.festival) }} {{ p.year }})
+{%- elif r.text_key == "no_baseline" -%}{# HI-07 #}विसर्जन से पहले का माप नहीं है, इसलिए तुलना नहीं हो सकती
+{%- elif r.text_key == "not_sampled" -%}{# HI-08 #}{{ p.expected }} ज़रूरी मापों में से {{ p.count }} दर्ज नहीं हैं
+{%- elif r.text_key == "table_absent" -%}{# HI-09 #}रिपोर्ट में इस घाट की {{ FEST.get(p.festival, p.festival) }} {{ p.year }} तालिका नहीं है
+{%- elif r.text_key == "metals_watch" -%}{# HI-10 #}धातु निगरानी, {{ p.parameter }} ({{ FEST.get(p.festival, p.festival) }} {{ p.year }}): विसर्जन अवधि में स्तर बढ़ा दिखा; केवल जानकारी हेतु, Class B सीमा नहीं है
+{%- endif -%}
+{%- if r.page %} [{{ r.year_report }} रिपोर्ट, पेज {{ r.page }}]{% endif %}।
+{%- endmacro %}
+{% macro item(i) -%}
+{%- set p = i.params -%}
+{%- if i.key == "units_assumed" -%}{# HI-11 #}जहाँ रिपोर्ट में इकाई नहीं छपी, वहाँ mg/l मानी गई है।
+{%- elif i.key == "four_metals_only" -%}{# HI-12 #}रिपोर्ट में केवल चार धातुएँ हैं (क्रोमियम, लेड, ज़िंक, कॉपर); इनकी Class B सीमा नहीं है।
+{%- elif i.key == "kamla_ambiguity" -%}{# HI-13 #}रानी कमलापति और कमला पार्क दो अलग जगहें हो सकती हैं, जो एक नाम से दर्ज हैं।
+{%- elif i.key == "table_absent" -%}{# HI-14 #}{{ p.site }}: रिपोर्ट में {{ FEST.get(p.festival, p.festival) }} {{ p.year }} की तालिका नहीं है।
+{%- elif i.key == "placeholder" -%}{# HI-15 #}{{ p.parameter }} का एक ही मान {{ p.value|num }}, {{ FEST.get(p.festival, p.festival) }} {{ p.year }} में {{ p.cells }} जगह दर्ज है: संभवतः भरा हुआ मान, रिपोर्ट में जाँचें।
+{%- elif i.key == "not_sampled" -%}{# HI-16 #}{{ p.site }}: {{ p.expected }} ज़रूरी मापों में से {{ p.count }} दर्ज नहीं हैं।
+{%- endif -%}
+{%- endmacro %}
+{% macro action(a) -%}
+{%- if a.key == "aerate" -%}{# HI-17 #}**{{ a.site }}**: विसर्जन से पहले और दौरान aeration (पानी में हवा देने) की व्यवस्था करें और DO जाँचें।
+{%- elif a.key == "clean" -%}{# HI-18 #}**{{ a.site }}**: विसर्जन अवधि के बाद विसर्जित सामग्री हटाने और सफ़ाई की योजना बनाएँ।
+{%- elif a.key == "test" -%}{# HI-19 #}**{{ a.site }}**: DO, BOD और pH का माप विसर्जन से पहले, {{ f.target_date }} को और {{ f.after_phase_date }} को लें।
+{%- endif -%}
+{%- endmacro %}
+{# HI-20 #}# घाट वॉच रिपोर्ट: दुर्गा विसर्जन {{ f.target_date }}
+
+{# HI-21 #}CPCB Class {{ f.class }} सीमा: DO {{ f.limits.do_min|num }} mg/l या अधिक, BOD {{ f.limits.bod_max|num }} mg/l या कम, pH {{ f.limits.ph_min|num }} से {{ f.limits.ph_max|num }}।
+
+## मुख्य बात
+{% set g = top[0] %}
+{# HI-22 #}{{ f.n_ghats }} घाटों में पानी की गुणवत्ता का सबसे अधिक जोखिम **{{ g.site }}** पर है{% if g.score is not none %} (स्कोर {{ g.score|num }}, भरोसा {{ CONF[g.confidence] }}){% else %} (कोई माप नहीं, पहले जाँच करें){% endif %}।
+
+{# HI-23 #}## सबसे अधिक जोखिम वाले {{ f.n_top }} घाट
+{% for g in top %}
+- **{{ g.rank }}. {{ g.site }}**: स्कोर {% if g.score is not none %}{{ g.score|num }}{% else %}उपलब्ध नहीं{% endif %}, भरोसा {{ CONF[g.confidence] }} (ज़रूरी मापों में से {{ g.coverage_pct }}% उपलब्ध)। {% for r in g.reasons[:2] %}{{ reason(r) }} {% endfor %}
+
+{% endfor %}
+## आँकड़ों की कमी
+{% for i in f.gap_items %}
+- {{ item(i) }}
+{% else %}
+- {# HI-24 #}कोई कमी दर्ज नहीं।
+{% endfor %}
+
+## सुझाए गए कदम
+{% for g in f.ghats %}{% for a in g.actions %}{% if g.rank <= f.n_top or a.key == "test" %}
+- {{ action(a) }}
+{% endif %}{% endfor %}{% endfor %}
+
+## यह रिपोर्ट क्या नहीं बताती
+{# HI-25 #}- यह लोगों, पशुओं या मछलियों पर असर के बारे में कुछ नहीं बताती।
+{# HI-26 #}- यह नहीं बताती कि माप क्यों बदला; "विसर्जन अवधि" का अर्थ केवल इतना है कि माप विसर्जन के आसपास लिया गया।
+{# HI-27 #}- यह केवल पुरानी रिपोर्टों ({{ f.years|first }} से {{ f.years|last }}) पर आधारित है; {{ f.target_date }} के लिए नए माप ज़रूरी हैं।
+{% for i in f.limits_items %}
+- {{ item(i) }}
+{% endfor %}

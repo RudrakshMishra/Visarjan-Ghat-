@@ -19,3 +19,8 @@
 | D15 | T7 reworded: replacing a *failing* reading with NOT_SAMPLED lowers coverage and leaves the count of passes unchanged; replacing a *passing* reading never lowers the score | Under TRD's P formula, removing a fail necessarily changes P; literal T7 conflicts with TRD 5 (TRD formula wins) | Change the P formula |
 | D16 | Metals list (Chromium, Lead, Zinc, Copper) is matched on exact `parameter` names; verify against real data | Data not yet available | Fuzzy match |
 | D17 | `load_rules`, `evidence_for`, `testing_checklist` take an optional trailing `cfg` argument | Need config values; TRD signatures still work unchanged | Global state |
+| D18 | `fmt_num`: ints plain, floats with 1-2 decimals (5.0, 0.0, 3.25); scores rounded to 1 decimal in facts | One format for facts, templates and guard | Strip `.0` |
+| D19 | Facts adds `gap_items`, `limits_items`, `actions`, `limits`, `n_ghats`, `n_top`, `coverage_pct`, `years`, dates (beyond TRD schema) so templates never hardcode numbers; HI text renders from items | Hindi needs keys, not English strings | Translate strings at runtime |
+| D20 | Actions: DO fail -> aerate, BOD fail -> clean, confidence below High or missing data -> test; shown for top 3, plus "test" for all ghats | Derived from tags/reasons only, no health reasoning | Officer-written actions |
+| D21 | `allowed_numbers` = every number in facts + date parts + 2-digit year suffixes (for "2023-25") | Guard must accept what templates legitimately print | Exact strings only |
+| D22 | Guard strips URLs and site names before extracting numbers; EN banned phrases use word boundaries, HI uses NFC substrings | Avoid "cleaning" false positives; Hindi has no reliable \b | Plain substring |
